@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="show"
+        android:title="Show Pokemon"/>
+    <PreferenceScreen
+        android:title="Specify Pokemon">
+        <ListPreference
+
+            android:key="pokemon"
+            android:title="Select Pokemon"/>
+    </PreferenceScreen>
+</PreferenceScreen>
+
+    <!--            android:entries="@array/pokemon_names"-->
+    <!--            android:entryValues="@array/pokemon_values"-->

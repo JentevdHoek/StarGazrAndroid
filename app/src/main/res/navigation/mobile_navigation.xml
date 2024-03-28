@@ -6,6 +6,12 @@
     app:startDestination="@+id/navigation_home">
 
     <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.example.stargazrandroid.ui.settings.SettingsFragment"
+        android:label="Settings"
+        tools:layout="@layout/fragment_settings" />
+
+    <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.stargazrandroid.ui.home.HomeFragment"
         android:label="@string/title_home"
