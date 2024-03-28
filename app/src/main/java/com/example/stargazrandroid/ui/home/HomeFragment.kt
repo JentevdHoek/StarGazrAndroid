@@ -54,15 +54,19 @@ class HomeFragment : Fragment() {
         }
 
         searchViewBinding.buttonFetchData.setOnClickListener {
-            val year = searchViewBinding.datePicker.year
-            val month = searchViewBinding.datePicker.month
-            val day = searchViewBinding.datePicker.dayOfMonth
+            val formattedDate = if (searchViewBinding.datePicker.visibility == View.VISIBLE) {
+                val year = searchViewBinding.datePicker.year
+                val month = searchViewBinding.datePicker.month
+                val day = searchViewBinding.datePicker.dayOfMonth
 
-            val calendar = Calendar.getInstance()
-            calendar.set(year, month, day)
+                val calendar = Calendar.getInstance()
+                calendar.set(year, month, day)
 
-            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-            val formattedDate = sdf.format(calendar.time)
+                val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+                sdf.format(calendar.time)
+            } else {
+                null
+            }
 
             homeViewModel.fetchData(formattedDate)
         }
