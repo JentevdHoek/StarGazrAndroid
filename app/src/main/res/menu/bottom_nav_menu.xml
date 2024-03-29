@@ -4,7 +4,7 @@
     <item
         android:id="@+id/navigation_settings"
         android:icon="@android:drawable/ic_menu_preferences"
-        android:title="Settings" />
+        android:title="@string/settings" />
 
     <item
         android:id="@+id/navigation_home"
@@ -12,7 +12,7 @@
         android:title="@string/title_home" />
 
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_saved_items"
         android:icon="@drawable/ic_dashboard_black_24dp"
         android:title="@string/title_dashboard" />
 
@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:icon="@android:drawable/ic_menu_add"
         android:title="Add Image" />
+
     <item
         android:id="@+id/navigation_notifications"
         android:icon="@drawable/ic_notifications_black_24dp"
