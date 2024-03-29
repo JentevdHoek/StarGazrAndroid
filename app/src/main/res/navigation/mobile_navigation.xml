@@ -36,4 +36,8 @@
         android:name="com.example.stargazrandroid.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/navigation_add_image"
+        android:name="com.example.stargazrandroid.ui.addImage.AddImageFragment"
+        android:label="navigation_add_image" />
 </navigation>
