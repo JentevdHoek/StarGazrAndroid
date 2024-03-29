@@ -17,6 +17,8 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.example.stargazrandroid.R
 import com.example.stargazrandroid.databinding.FragmentAddImageBinding
 import com.example.stargazrandroid.ui.dashboard.SharedViewModel
 import java.io.File
@@ -78,6 +80,13 @@ class AddImageFragment : Fragment() {
         return root
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        updateImage(null)
+        binding.editTitleText.setText("Title")
+        binding.editDescriptionLine.setText("Description")
+    }
+
     private fun TakePicture() {
         if (isPermissionGranted()) {
             try {
@@ -120,8 +129,11 @@ class AddImageFragment : Fragment() {
             addImageViewModel.description = binding.editTitleText.text.toString()
 
             val model = addImageViewModel.save(requireContext())
-            if (model != null)
+            if (model != null) {
                 sharedViewModel.addItem(model)
+                val navController = findNavController()
+                navController.navigate(R.id.navigation_saved_items)
+            }
         }
     }
 
@@ -137,7 +149,7 @@ class AddImageFragment : Fragment() {
         }
     }
 
-    private fun updateImage(uri: Uri) {
+    private fun updateImage(uri: Uri?) {
         addImageViewModel.imageSrc = uri
         binding.imageView.setImageURI(uri)
     }

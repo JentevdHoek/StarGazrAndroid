@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Environment
 import androidx.lifecycle.ViewModel
-import com.example.stargazrandroid.model.FavoriteModel
 import com.example.stargazrandroid.model.SavedItem
 import java.io.File
 import java.io.FileNotFoundException
