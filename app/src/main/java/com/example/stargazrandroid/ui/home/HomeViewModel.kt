@@ -2,11 +2,8 @@ package com.example.stargazrandroid.ui.home
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.example.stargazrandroid.model.APODModel
-import com.example.stargazrandroid.model.FavoriteModel
-import com.example.stargazrandroid.model.FavoritesModel
 import com.example.stargazrandroid.model.SavedItem
 import com.example.stargazrandroid.model.fetchAPODData
 import kotlinx.coroutines.launch

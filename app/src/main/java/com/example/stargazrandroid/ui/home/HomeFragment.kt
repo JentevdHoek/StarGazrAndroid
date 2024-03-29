@@ -94,28 +94,22 @@ class HomeFragment : Fragment() {
             }.start()
             binding.textViewDescription.text = data.explanation
 
-            // Add a click listener to the save button
+
             binding.buttonViewDetails.setOnClickListener {
-                // Launch a coroutine on the IO dispatcher
                 lifecycleScope.launch(Dispatchers.IO) {
-                    // Convert the image URL to a Bitmap
                     val url = URL(data.url)
                     val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
 
-                    // Create a SavedItem with the current title, image, and description
                     val savedItem = SavedItem(
                         title = data.title,
                         image = bmp,
                         description = data.explanation
                     )
 
-                    // Get the current list of saved items from the shared ViewModel
                     val currentSavedItems = sharedViewModel.savedItems.value ?: emptyList()
 
-                    // Add the new SavedItem to the list
                     val updatedSavedItems = currentSavedItems + savedItem
 
-                    // Update the savedItems in the shared ViewModel on the main thread
                     withContext(Dispatchers.Main) {
                         sharedViewModel.savedItems.value = updatedSavedItems
                     }

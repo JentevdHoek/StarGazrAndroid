@@ -8,8 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.stargazrandroid.databinding.FragmentSavedItemsBinding
-import com.example.stargazrandroid.model.SavedItem
-import com.example.stargazrandroid.ui.home.HomeFragment
 
 class SavedItemsFragment : Fragment() {
 
@@ -28,9 +26,7 @@ class SavedItemsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Observe the savedItems in the shared ViewModel
         sharedViewModel.savedItems.observe(viewLifecycleOwner) { savedItems ->
-            // Set up the RecyclerView
             binding.recyclerView.layoutManager = LinearLayoutManager(context)
             binding.recyclerView.adapter = SavedItemsAdapter(savedItems)
         }
