@@ -1,15 +1,22 @@
 package com.example.stargazrandroid.ui.home
 
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.*
 import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.lifecycleScope
 import com.example.stargazrandroid.R
 import com.example.stargazrandroid.databinding.FragmentHomeBinding
 import com.example.stargazrandroid.databinding.SearchViewBinding
+import com.example.stargazrandroid.model.SavedItem
+import com.example.stargazrandroid.ui.dashboard.SharedViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
@@ -20,6 +27,8 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var searchViewBinding: SearchViewBinding
+
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +47,7 @@ class HomeFragment : Fragment() {
         minDate.set(1995, 5, 20)
         searchViewBinding.datePicker.minDate = minDate.timeInMillis
 
-        setHasOptionsMenu(true)
+        binding.buttonViewDetails.visibility = View.GONE
 
         return binding.root
     }
@@ -79,24 +88,48 @@ class HomeFragment : Fragment() {
                 val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
                 activity?.runOnUiThread {
                     binding.imageViewApod.setImageBitmap(bmp)
+                    //toon save knop
+                    binding.buttonViewDetails.visibility = View.VISIBLE
                 }
             }.start()
             binding.textViewDescription.text = data.explanation
-        }
-    }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.home_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
+            // Add a click listener to the save button
+            binding.buttonViewDetails.setOnClickListener {
+                // Launch a coroutine on the IO dispatcher
+                lifecycleScope.launch(Dispatchers.IO) {
+                    // Convert the image URL to a Bitmap
+                    val url = URL(data.url)
+                    val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                findNavController().navigate(R.id.action_settings_to_home)
-                true
+                    // Create a SavedItem with the current title, image, and description
+                    val savedItem = SavedItem(
+                        title = data.title,
+                        image = bmp,
+                        description = data.explanation
+                    )
+
+                    // Get the current list of saved items from the shared ViewModel
+                    val currentSavedItems = sharedViewModel.savedItems.value ?: emptyList()
+
+                    // Add the new SavedItem to the list
+                    val updatedSavedItems = currentSavedItems + savedItem
+
+                    // Update the savedItems in the shared ViewModel on the main thread
+                    withContext(Dispatchers.Main) {
+                        sharedViewModel.savedItems.value = updatedSavedItems
+                    }
+                }
             }
-            else -> super.onOptionsItemSelected(item)
+        }
+
+        binding.buttonViewDetails.setOnClickListener {
+            val title = binding.textViewTitle.text.toString()
+            val image = (binding.imageViewApod.drawable as BitmapDrawable).bitmap
+            val description = binding.textViewDescription.text.toString()
+
+            val item = SavedItem(title, image, description)
+            homeViewModel.saveItem(item)
         }
     }
 
