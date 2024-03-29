@@ -13,7 +13,7 @@
         android:layout_marginLeft="13dp"
         android:layout_marginTop="0dp"
         android:padding="8dp"
-        android:text="Fetch Data" />
+        android:text="@string/fetch_data" />
 
     <ToggleButton
         android:id="@+id/toggle_date_picker"
@@ -24,8 +24,8 @@
         android:layout_marginLeft="13dp"
         android:layout_marginTop="60dp"
         android:padding="8dp"
-        android:textOff="Random image"
-        android:textOn="Date" />
+        android:textOff="@string/random_image"
+        android:textOn="@string/date" />
 
     <DatePicker
         android:id="@+id/date_picker"
