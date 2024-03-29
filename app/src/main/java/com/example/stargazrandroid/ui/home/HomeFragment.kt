@@ -2,12 +2,11 @@ package com.example.stargazrandroid.ui.home
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.stargazrandroid.R
 import com.example.stargazrandroid.databinding.FragmentHomeBinding
 import com.example.stargazrandroid.databinding.SearchViewBinding
@@ -38,6 +37,8 @@ class HomeFragment : Fragment() {
         val minDate = Calendar.getInstance()
         minDate.set(1995, 5, 20)
         searchViewBinding.datePicker.minDate = minDate.timeInMillis
+
+        setHasOptionsMenu(true)
 
         return binding.root
     }
@@ -81,6 +82,21 @@ class HomeFragment : Fragment() {
                 }
             }.start()
             binding.textViewDescription.text = data.explanation
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.home_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                findNavController().navigate(R.id.action_settings_to_home)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
