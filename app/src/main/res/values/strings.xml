@@ -17,4 +17,5 @@
     <string name="take_picture">Take Picture</string>
     <string name="save">Save</string>
     <string name="user_selected_image">User selected image</string>
+    <string name="view_save">save</string>
 </resources>

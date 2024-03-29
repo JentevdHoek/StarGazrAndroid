@@ -15,8 +15,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.stargazrandroid.databinding.FragmentAddImageBinding
+import com.example.stargazrandroid.ui.dashboard.SharedViewModel
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -25,6 +27,8 @@ import java.util.Date
 class AddImageFragment : Fragment() {
     private var _addImageViewModel: AddImageViewModel? = null
     private val addImageViewModel get() = _addImageViewModel!!
+
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     private var _binding: FragmentAddImageBinding? = null
     private val binding get() = _binding!!
@@ -45,8 +49,7 @@ class AddImageFragment : Fragment() {
 
     private val cameraActivity = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
         if (success && photoURI != null) {
-            addImageViewModel.imageSrc = photoURI
-            binding.imageView.setImageURI(photoURI)
+            updateImage(photoURI!!)
         } else {
             Toast.makeText(requireContext(), "Failed to capture image", Toast.LENGTH_SHORT).show()
         }
@@ -54,8 +57,7 @@ class AddImageFragment : Fragment() {
 
     private val imageActivity = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri: Uri? ->
         if (uri != null) {
-            addImageViewModel.imageSrc = uri
-            binding.imageView.setImageURI(uri)
+            updateImage(uri)
         }
     }
 
@@ -97,7 +99,6 @@ class AddImageFragment : Fragment() {
 
     @Throws(IOException::class)
     private fun createImageFile(): File {
-        // Create an image file name
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val imageFileName = "JPEG_" + timeStamp + "_"
         val storageDir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
@@ -114,19 +115,13 @@ class AddImageFragment : Fragment() {
     ) == PackageManager.PERMISSION_GRANTED
 
     private fun setSaveButtonListener() {
-        binding.saveButton.setOnClickListener(){
+        binding.saveButton.setOnClickListener {
             addImageViewModel.title = binding.editTitleText.text.toString()
             addImageViewModel.description = binding.editTitleText.text.toString()
 
             val model = addImageViewModel.save(requireContext())
-
             if (model != null)
-            {
-                val imagePath = model.imagePath
-                Log.i("Image Save", imagePath)
-
-//                binding.imageResView.setImageURI(Uri.parse("file://$imagePath"))
-            }
+                sharedViewModel.addItem(model)
         }
     }
 
@@ -140,5 +135,10 @@ class AddImageFragment : Fragment() {
         binding.fromCameraButton.setOnClickListener {
             TakePicture()
         }
+    }
+
+    private fun updateImage(uri: Uri) {
+        addImageViewModel.imageSrc = uri
+        binding.imageView.setImageURI(uri)
     }
 }

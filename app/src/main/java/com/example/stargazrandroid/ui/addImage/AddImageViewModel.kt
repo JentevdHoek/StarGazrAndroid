@@ -2,11 +2,15 @@ package com.example.stargazrandroid.ui.addImage
 
 import android.content.ContentResolver
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Environment
 import androidx.lifecycle.ViewModel
 import com.example.stargazrandroid.model.FavoriteModel
+import com.example.stargazrandroid.model.SavedItem
 import java.io.File
+import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.OutputStream
@@ -19,12 +23,17 @@ class AddImageViewModel: ViewModel() {
     var title: String? = null
     var description: String? = null
 
-    fun save(context: Context): FavoriteModel? {
+    fun save(context: Context): SavedItem? {
         if (imageSrc == null || title == null || description == null)
             return null
 
-        val imagePath = saveImage(context)
-        return FavoriteModel(description!!, "image", title!!, imagePath)
+        val imageBitmap = imageToBitmap(context)
+        return SavedItem(title!!, imageBitmap, description!!)
+    }
+
+    private fun imageToBitmap(context: Context): Bitmap {
+        val inputStream = imageSrc?.let { context.contentResolver.openInputStream(it) }
+        return BitmapFactory.decodeStream(inputStream)
     }
 
     private fun saveImage(context: Context): String {
