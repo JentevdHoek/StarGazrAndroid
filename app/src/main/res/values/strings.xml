@@ -16,6 +16,9 @@
     <string name="from_gallery">From Gallery</string>
     <string name="take_picture">Take Picture</string>
     <string name="save">Save</string>
-    <string name="user_selected_image">User selected image</string>
+    <string name="user_selected_image">User chosen image</string>
     <string name="view_save">save</string>
+    <string name="add_image">Add Image</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
 </resources>

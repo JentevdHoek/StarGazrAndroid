@@ -87,6 +87,8 @@ class HomeFragment : Fragment() {
                 val url = URL(data.url)
                 val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
                 activity?.runOnUiThread {
+                    if (_binding == null)
+                        return@runOnUiThread
                     binding.imageViewApod.setImageBitmap(bmp)
                     //toon save knop
                     binding.buttonViewDetails.visibility = View.VISIBLE

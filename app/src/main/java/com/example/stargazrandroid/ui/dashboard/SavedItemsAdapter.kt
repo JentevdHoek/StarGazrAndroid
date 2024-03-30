@@ -22,6 +22,7 @@ class SavedItemsAdapter(
         holder.binding.apply {
             imageView.setImageBitmap(savedItem.image)
             textViewTitle.text = savedItem.title
+            textViewDescription.text = savedItem.description
         }
     }
 

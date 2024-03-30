@@ -38,11 +38,11 @@
 
                 <Button
                     android:id="@+id/from_gallery_button"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/from_gallery"
-                    style="?android:attr/buttonBarButtonStyle" />
+                    android:text="@string/from_gallery" />
 
                 <Button
                     android:id="@+id/from_camera_button"
@@ -51,31 +51,61 @@
                     android:layout_weight="1"
                     android:text="@string/take_picture"
                     style="?android:attr/buttonBarButtonStyle" />
+
             </LinearLayout>
 
-            <EditText
-                android:id="@+id/editTitleText"
-                android:layout_width="253dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="32dp"
-                android:ems="10"
-                android:inputType="text"
-                android:text="Title" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/editDescriptionLine"
-                android:layout_width="254dp"
-                android:layout_height="72dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="39dp"
-                android:layout_marginEnd="32dp"
-                android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine"
-                android:singleLine="false"
-                android:text="Description" />
+                <TextView
+                    android:id="@+id/titleInputLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/title"
+                    android:labelFor="@+id/editTitleText"/>
+
+                <EditText
+                    android:id="@+id/editTitleText"
+                    android:layout_width="307dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="32dp"
+                    android:autofillHints=""
+                    android:ems="10"
+                    android:inputType="text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/descriptionInputLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/description"
+                    android:labelFor="@+id/editDescriptionLine"/>
+
+                <EditText
+                    android:id="@+id/editDescriptionLine"
+                    android:layout_width="309dp"
+                    android:layout_height="72dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="32dp"
+                    android:ems="10"
+                    android:gravity="start|top"
+                    android:inputType="textMultiLine"
+                    android:singleLine="false"
+                    android:autofillHints="" />
+            </LinearLayout>
 
             <Button
                 android:id="@+id/saveButton"

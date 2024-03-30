@@ -17,7 +17,7 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.findNavController
 import com.example.stargazrandroid.R
 import com.example.stargazrandroid.databinding.FragmentAddImageBinding
 import com.example.stargazrandroid.ui.dashboard.SharedViewModel
@@ -82,9 +82,7 @@ class AddImageFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        updateImage(null)
-        binding.editTitleText.setText("Title")
-        binding.editDescriptionLine.setText("Description")
+        resetForm()
     }
 
     private fun TakePicture() {
@@ -131,8 +129,7 @@ class AddImageFragment : Fragment() {
             val model = addImageViewModel.save(requireContext())
             if (model != null) {
                 sharedViewModel.addItem(model)
-                val navController = findNavController()
-                navController.navigate(R.id.navigation_saved_items)
+                resetForm()
             }
         }
     }
@@ -152,5 +149,13 @@ class AddImageFragment : Fragment() {
     private fun updateImage(uri: Uri?) {
         addImageViewModel.imageSrc = uri
         binding.imageView.setImageURI(uri)
+    }
+
+    private fun resetForm() {
+        if (_binding == null) return
+
+        updateImage(null)
+        binding.editTitleText.setText("Title")
+        binding.editDescriptionLine.setText("Description")
     }
 }
