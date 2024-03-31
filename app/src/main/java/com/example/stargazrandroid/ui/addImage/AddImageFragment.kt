@@ -155,7 +155,7 @@ class AddImageFragment : Fragment() {
         if (_binding == null) return
 
         updateImage(null)
-        binding.editTitleText.setText("Title")
-        binding.editDescriptionLine.setText("Description")
+        binding.editTitleText.text = null
+        binding.editDescriptionLine.text = null
     }
 }
