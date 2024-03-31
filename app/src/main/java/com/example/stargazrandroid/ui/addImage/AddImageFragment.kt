@@ -43,6 +43,8 @@ class AddImageFragment : Fragment() {
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
             if (granted) {
                 TakePicture()
+            } else {
+                Toast.makeText(requireContext(), "Camera permission is required", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -130,6 +132,8 @@ class AddImageFragment : Fragment() {
             if (model != null) {
                 sharedViewModel.addItem(model)
                 resetForm()
+            } else {
+                Toast.makeText(requireContext(), "Everything has to be filled", Toast.LENGTH_SHORT).show()
             }
         }
     }
